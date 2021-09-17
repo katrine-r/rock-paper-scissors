@@ -1,85 +1,110 @@
 import React, { Component } from "react";
 import classes from "./RockPaperScissors.module.css";
-// import ChoiceOfAction from "../../components/ChoiceOfAction/ChoiceOfAction";
-
-function getRandomNumberMinMax(min, max) {
-  const randomChoice = Math.floor(Math.random() * (max - min + 1) + min);
-  console.log("randomChoice ", randomChoice);
-  return randomChoice;
-}
-
-// 1 - Paper
-// 2 - Scissors
-// 3 - Rock
+import ResultsRockPaperScissors from '../../components/ResultsRockPaperScissors/ResultsRockPaperScissors'
+import Button from '../../components/UI/Button/Button'
 
 class RockPaperScissors extends Component {
-  state = {
-    clickButton: false,
-    myChoice: null,
-    randomChoice: null
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      clickButton: false,
+      myChoice: "",
+      randomChoice: "",
+      winner: "",
+      userCounter: 0,
+      pcCounter: 0
+    };
+    
+    this.onClickChoiceHandler = this.onClickChoiceHandler.bind(this)
+    this.myChoiceHandler = this.myChoiceHandler.bind(this)
+  }
+
+  getRandomNumberMinMax(min,max) {
+    const random = Math.floor(Math.random() * (max - min + 1) + min)
+
+    let randomChoice;
+
+    if (random === 1) {
+      randomChoice = "paper";
+      this.setState(
+        {
+          randomChoice: "paper"
+        },
+        () => {
+          console.log("randomChoice ", this.state.randomChoice);
+        }
+      );
+    } else if (random === 2) {
+      randomChoice = "scissors";
+      this.setState(
+        {
+          randomChoice: "scissors"
+        },
+        () => {
+          console.log("randomChoice ", this.state.randomChoice);
+        }
+      );
+    } else if (random === 3) {
+      randomChoice = "rock";
+      this.setState(
+        {
+          randomChoice: "rock"
+        },
+        () => {
+          console.log("randomChoice ", this.state.randomChoice);
+        }
+      );
+    }
+    return randomChoice;
+  }
+  
+  myChoiceHandler = (event) => {
+    this.setState(
+      {
+        myChoice: event.target.id
+      },
+      () => {
+        console.log(this.state.myChoice);
+      }
+    );
+    return event.target.id;
   };
 
-  // My Choice - PAPER
-  onClickPaperHandler = () => {
-    const myChoice = 1;
-    console.log("click Paper ", myChoice);
-    const randomChoice = getRandomNumberMinMax(1, 3);
-    if (myChoice === randomChoice) {
-      console.log("Draw!");
-    }
-    if (randomChoice === 2) {
-      console.log("You lose!");
-    }
-    if (randomChoice === 3) {
-      console.log("You win!");
-    }
+  onClickChoiceHandler(event) {
+    const myChoice = this.myChoiceHandler(event);
+    console.log("user ", myChoice);
+    const randomChoice = this.getRandomNumberMinMax(1, 3);
+    console.log("pc ", randomChoice);
+
     this.setState({
-      // clickPaper: true,
-      myChoice,
-      randomChoice,
       clickButton: true
     });
-  };
 
-  // My Choice - SCISSORS
-  onClickScissorsHandler = () => {
-    const myChoice = 2;
-    console.log("click Scissors ", myChoice);
-    const randomChoice = getRandomNumberMinMax(1, 3);
-    if (myChoice === randomChoice) {
-      console.log("Draw!");
+    if (
+      (myChoice === "paper" && randomChoice === "rock") ||
+      (myChoice === "rock" && randomChoice === "scissors") ||
+      (myChoice === "scissors" && randomChoice === "paper")
+    ) {
+      this.setState({
+        winner: "You win",
+        userCounter: this.state.userCounter + 1
+      });
+    } else if (myChoice === randomChoice) {
+      this.setState({
+        winner: "Draw"
+      });
+    } else {
+      this.setState({
+        winner: "You lose",
+        pcCounter: this.state.pcCounter + 1
+      });
     }
-    if (randomChoice === 3) {
-      console.log("You lose!");
-    }
-    if (randomChoice === 1) {
-      console.log("You win!");
-    }
-    this.setState({
-      myChoice,
-      randomChoice,
-      clickButton: true
-    });
-  };
+  }
 
-  // My Choice - ROCK
-  onClickRockHandler = () => {
-    const myChoice = 3;
-    console.log("click Rock ", myChoice);
-    const randomChoice = getRandomNumberMinMax(1, 3);
-    if (myChoice === randomChoice) {
-      console.log("Draw!");
-    }
-    if (randomChoice === 1) {
-      console.log("You lose!");
-    }
-    if (randomChoice === 2) {
-      console.log("You win!");
-    }
+  onClickTryAganHandler = () => {
     this.setState({
-      myChoice,
-      randomChoice,
-      clickButton: true
+      clickButton: false
     });
   };
 
@@ -96,37 +121,62 @@ class RockPaperScissors extends Component {
             <div className={classes.WrapperScore}>
               <div className={classes.Score}>
                 <small>Score</small>
-                <p>12</p>
+                <div className={classes.ResultsScore}>
+                  <div className={classes.AccountScore}>
+                    <small>user</small>
+                    <p>{this.state.userCounter}</p>
+                  </div>
+                  <div className={classes.AccountScore}>
+                    <small>pc</small>
+                    <p>{this.state.pcCounter}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <div className={classes.ChoiceOfAction}>
-          <div className={classes.WrapperButton}>
-            <div className={classes.PositionPaperScissors}>
-              <button
-                className={classes.Paper}
-                onClick={this.onClickPaperHandler}
-              >
-                Paper
-              </button>
-              <button
-                className={classes.Scissors}
-                onClick={this.onClickScissorsHandler}
-              >
-                Scissors
-              </button>
-            </div>
-            <div className={classes.PositionRock}>
-              <button
-                className={classes.Rock}
-                onClick={this.onClickRockHandler}
-              >
-                Rock
-              </button>
-            </div>
-          </div>
+          { this.state.clickButton ? 
+            <ResultsRockPaperScissors 
+              clickButton={this.state.clickButton}
+              myChoice={this.state.myChoice}
+              randomChoice={this.state.randomChoice}
+              winner={this.state.winner}
+              onClick={this.onClickTryAganHandler}
+            /> 
+            : (
+              <div className={classes.WrapperButton}>
+                <div className={classes.PositionPaperScissors}>
+                  <Button
+                    id="paper"
+                    type="paper"
+                    onClick={this.onClickChoiceHandler}
+                  >
+                    Paper
+                  </Button>
+                  <Button
+                    id="scissors"
+                    type="scissors"
+                    onClick={this.onClickChoiceHandler}
+                  >
+                    Scissors
+                  </Button>
+                </div>
+                <div className={classes.PositionRock}>
+                  <Button
+                    id="rock"
+                    type="rock"
+                    onClick={this.onClickChoiceHandler}
+                  >
+                    Rock
+                  </Button>
+                </div>
+              </div>
+            )}       
+        </div>
+        <div className={classes.PositionButtonRules}>
+          <button className={classes.ButtonRules}>Rules</button>
         </div>
       </div>
     );

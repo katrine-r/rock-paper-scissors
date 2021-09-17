@@ -1,0 +1,67 @@
+.ResultsRockPaperScissors {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .Wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    width: 100%;
+    min-width: 600px;
+  }
+  
+  .WrapperButton {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-width: 280px;
+    max-width: 280px;
+  }
+  
+  .WhoIsTheWinner {
+    min-width: 120px;
+    margin: 0 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .Winner {
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  button {
+    margin: 0;
+    padding: 7px 20px;
+    display: inline-block;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  button:active {
+    box-shadow: inset 2px 2px 1px rgba(0, 0, 0, 0.5);
+  }
+  
+  .TryAgan {
+    background: rgb(238, 238, 238);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    color: #000;
+  }
+  
+  .PositionPaperScissors {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .PositionRock {
+    display: flex;
+    justify-content: center;
+  }
+  
