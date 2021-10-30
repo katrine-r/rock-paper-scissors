@@ -1,0 +1,37 @@
+.PopUpRules {
+    position: fixed;
+    width: 400px;
+    height: 410px;
+    left: 50%;
+    top: 50%;
+    margin-left: -200px;
+    margin-top: -205px;
+    background: #fff;
+    border-radius: 10px;
+    box-sizing: border-box;
+    z-index: 100;
+  }
+  
+  .WrapperPopUpRules {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px 30px 30px 30px;
+  }
+  
+  .HeaderRules {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .HeaderRules h1 {
+    text-transform: uppercase;
+    color: #555369;
+    font-weight: bold;
+    font-size: 25px;
+  }
+  
+  .IconRules {
+    margin-top: 50px;
+  }  

@@ -1,6 +1,7 @@
 import React from 'react'
 import classes from './ResultsRockPaperScissors.module.css'
 import Button from "../UI/Button/Button";
+import { SVGiconsSelector } from '../UI/SVGiconsSelector/SVGiconsSelector';
 
 const ResultsRockPaperScissors = props => {
     return (
@@ -13,8 +14,9 @@ const ResultsRockPaperScissors = props => {
                         type={props.myChoice}
                         disabled="disabled"
                     >
-                    {props.myChoice}
+                        <SVGiconsSelector id={props.myChoice} />
                     </Button>
+
                     <div className={classes.WhoIsTheWinner}>
                         <div>
                             <div className={classes.Winner}>{props.winner}</div>
@@ -29,7 +31,7 @@ const ResultsRockPaperScissors = props => {
                         type={props.randomChoice}
                         disabled="disabled"
                     >
-                        {props.randomChoice}
+                        <SVGiconsSelector id={props.randomChoice} />
                     </Button>
                 </div>
                 </div>

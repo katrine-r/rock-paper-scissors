@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import classes from "./RockPaperScissors.module.css";
 import ResultsRockPaperScissors from '../../components/ResultsRockPaperScissors/ResultsRockPaperScissors'
 import Button from '../../components/UI/Button/Button'
+import { SVGiconsSelector } from '../../components/UI/SVGiconsSelector/SVGiconsSelector'
+import PopUpRules from "../../components/UI/PopUpRules/PopUpRules";
 
 class RockPaperScissors extends Component {
   constructor(props) {
@@ -13,7 +15,8 @@ class RockPaperScissors extends Component {
       randomChoice: "",
       winner: "",
       userCounter: 0,
-      pcCounter: 0
+      pcCounter: 0,
+      rules: false
     };
     
     this.onClickChoiceHandler = this.onClickChoiceHandler.bind(this)
@@ -62,13 +65,13 @@ class RockPaperScissors extends Component {
   myChoiceHandler = (event) => {
     this.setState(
       {
-        myChoice: event.target.id
+        myChoice: event.currentTarget.id
       },
       () => {
         console.log(this.state.myChoice);
       }
     );
-    return event.target.id;
+    return event.currentTarget.id;
   };
 
   onClickChoiceHandler(event) {
@@ -108,6 +111,12 @@ class RockPaperScissors extends Component {
     });
   };
 
+  onClickRulesHandler = () => {
+    this.setState({
+      rules: !this.state.rules
+    });
+  };
+
   render() {
     return (
       <div className={classes.RockPaperScissors}>
@@ -136,6 +145,10 @@ class RockPaperScissors extends Component {
           </div>
         </div>
 
+        {this.state.rules ? (
+          <PopUpRules onClick={this.onClickRulesHandler} />
+        ) : null}
+
         <div className={classes.ChoiceOfAction}>
           { this.state.clickButton ? 
             <ResultsRockPaperScissors 
@@ -147,36 +160,46 @@ class RockPaperScissors extends Component {
             /> 
             : (
               <div className={classes.WrapperButton}>
-                <div className={classes.PositionPaperScissors}>
-                  <Button
-                    id="paper"
-                    type="paper"
-                    onClick={this.onClickChoiceHandler}
-                  >
-                    Paper
-                  </Button>
-                  <Button
-                    id="scissors"
-                    type="scissors"
-                    onClick={this.onClickChoiceHandler}
-                  >
-                    Scissors
-                  </Button>
+                <div className={classes.PositionTriangle}>
+                  <SVGiconsSelector id="bgTriangle" />
                 </div>
-                <div className={classes.PositionRock}>
-                  <Button
-                    id="rock"
-                    type="rock"
-                    onClick={this.onClickChoiceHandler}
-                  >
-                    Rock
-                  </Button>
+                <div className={classes.PositionButtonsGame}>
+                  <div className={classes.PositionPaperScissors}>
+                    <Button
+                      id="paper"
+                      type="paper"
+                      onClick={this.onClickChoiceHandler}
+                    >
+                      <SVGiconsSelector id="paper" />
+                    </Button>
+                    <Button
+                      id="scissors"
+                      type="scissors"
+                      onClick={this.onClickChoiceHandler}
+                    >
+                      <SVGiconsSelector id="scissors" />
+                    </Button>
+                  </div>
+                  <div className={classes.PositionRock}>
+                    <Button
+                      id="rock"
+                      type="rock"
+                      onClick={this.onClickChoiceHandler}
+                    >
+                      <SVGiconsSelector id="rock" />
+                    </Button>
+                  </div>
                 </div>
               </div>
             )}       
         </div>
         <div className={classes.PositionButtonRules}>
-          <button className={classes.ButtonRules}>Rules</button>
+          <button 
+            className={classes.ButtonRules}
+            onClick={this.onClickRulesHandler}
+          >
+            Rules
+          </button>
         </div>
       </div>
     );

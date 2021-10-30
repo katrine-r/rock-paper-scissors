@@ -1,8 +1,17 @@
+/*Убрать полосу прокрутки у элемента*/
+.element::-webkit-scrollbar {
+  width: 0;
+}
+
+/*Убрать полосу прокрутки для всей страницы*/
+::-webkit-scrollbar {
+  width: 0;
+}
+
 .Layout {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background: radial-gradient(at top center, #1d3454, #172041);
   }
   
   .Layout main {
